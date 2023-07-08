@@ -13,12 +13,13 @@ int previousSec = 0;
 bool button3State = 0;
 DateTime now = rtc.now();
 
-
+float soll;
 
 // Defines the number of steps per rotation
 const int stepsPerRevolution = 2048;
 
-
+int TimeSetEverySec = 1;
+float TurnBy = TimeSetEverySec*5.12 ; 
 
 // Creates an instance of stepper class
 // Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
@@ -43,22 +44,16 @@ void setup() {
     rtc.adjust(newDT);
 }
 
-int TimeSetEverySec = 1;
-float TurnBy = TimeSetEverySec*5.12 ; 
-
 void loop() {
-Turn();
-checkButtons();
-
+ Turn();
+ checkButtons();
 }
-
-float soll;
 
 void Turn(){
  soll += TurnBy;
   while(soll>=1){
-  myStepper.step(1);
-  soll--;
+   myStepper.step(1);
+   soll--;
   }
 }
 
@@ -73,7 +68,7 @@ void checkButtons() {
   // }
 
   if (digitalRead(BUTTON4)) {
-  soll += 307.2;
+   soll += 307.2;
   }
 
   //if (digitalRead(BUTTON5)) {
